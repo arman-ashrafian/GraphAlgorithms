@@ -11,7 +11,7 @@ public:
 	Graph(int SIZE);
 
 	void addEdge(int p1, int p2, int weight);
-	void BFS(int start);
+	std::vector<int> BFS(int start);
 	void print();
 private:
 	std::vector< std::pair<int, int> > *adj;
@@ -28,7 +28,10 @@ void Graph::addEdge(int p1, int p2, int weight) {
 	adj[p2].push_back(std::make_pair(p1, weight));
 }
 
-void Graph::BFS(int start) {
+std::vector<int> Graph::BFS(int start) {
+	// return vector
+	std::vector<int> bfs_order;
+
 	// array for visted vertices
 	bool *visted = new bool[this->SIZE];
 	// set all vertices to not visted
@@ -49,7 +52,8 @@ void Graph::BFS(int start) {
 	while(!queue.empty()) {
 		// print when dequeing 
 		start = queue.front();
-		std::cout << start << " ";
+		bfs_order.push_back(start);
+		// std::cout << start << " ";
 		queue.pop_front();
 
 		// visit all adjacent nodes of vertex start.
@@ -61,9 +65,8 @@ void Graph::BFS(int start) {
 				queue.push_back(i->first);
 			}
 		}
-
 	}
-
+	return bfs_order;
 }
 
 void Graph::print() {
@@ -93,16 +96,60 @@ int main() {
 	cities["Atlanta"] = 10;
 	cities["Miami"] = 11;
 
-	Graph graph = Graph(4);
+	std::vector<std::string> cityVec = {
+		"Los Angeles",
+		"San Francisico",
+		"Seattle",
+		"Denver",
+		"Chicago",
+		"Kansas City",
+		"Dallas",
+		"Houston",
+		"Boston",
+		"New York",
+		"Atlanta",
+		"Miami"
+	};
 
-	graph.addEdge(0,1,100);
-	graph.addEdge(0,2,200);
-	graph.addEdge(1,2,100);
-	graph.addEdge(2,0,500);
-	graph.addEdge(2,3,300);
-	graph.addEdge(3,3,300);
+	Graph graph = Graph(12);
 
-	graph.BFS(2);
+	graph.addEdge(cities["Los Angeles"],cities["San Francisico"], 381);
+	graph.addEdge(cities["Los Angeles"],cities["Denver"], 1015);
+	graph.addEdge(cities["Los Angeles"],cities["Kansas City"], 1663);
+	graph.addEdge(cities["Los Angeles"],cities["Dallas"], 1435);
+
+	graph.addEdge(cities["San Francisico"],cities["Denver"], 1267);
+	graph.addEdge(cities["San Francisico"],cities["Seattle"], 807);
+
+	graph.addEdge(cities["Seattle"],cities["Denver"], 1331);
+	graph.addEdge(cities["Seattle"],cities["Chicago"], 2097);
+
+	graph.addEdge(cities["Denver"],cities["Kansas City"], 599);
+	graph.addEdge(cities["Denver"],cities["Chicago"], 1003);
+
+	graph.addEdge(cities["Chicago"],cities["Kansas City"], 533);
+	graph.addEdge(cities["Chicago"],cities["Boston"], 983);
+	graph.addEdge(cities["Chicago"],cities["New York"], 787);
+
+	graph.addEdge(cities["Kansas City"],cities["Dallas"], 496);
+	graph.addEdge(cities["Kansas City"],cities["Atlanta"], 864);
+	graph.addEdge(cities["Kansas City"],cities["New York"], 1260);
+
+	graph.addEdge(cities["Dallas"],cities["Atlanta"], 781);
+	graph.addEdge(cities["Dallas"],cities["Houston"], 239);
+
+	graph.addEdge(cities["Houston"],cities["Atlanta"], 810);
+	graph.addEdge(cities["Houston"],cities["Miami"], 1187);
+
+	graph.addEdge(cities["Miami"],cities["Atlanta"], 661);
+	graph.addEdge(cities["Atlanta"],cities["New York"], 888);
+	graph.addEdge(cities["Boston"],cities["New York"], 214);
+
+	std::vector<int> bfs_order = graph.BFS(0);
+
+	for(auto i : bfs_order) {
+		std::cout << cityVec[i] << std::endl;
+	}
 
 	return 0;
 }
