@@ -14,12 +14,9 @@ public:
 	void addEdge(int p1, int p2, int weight);
 	std::vector<int> BFS(int start);
 	void print();
-	bool __sortbysec(const std::pair<int,int> &a,
-          		const std::pair<int,int> &b);	
 private:
-
 	void __sortAdjEdges();
-
+	
 	std::vector< std::pair<int, int> > *adj;
 	int SIZE;
 };
