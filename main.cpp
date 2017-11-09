@@ -40,7 +40,7 @@ void Graph::__sortAdjEdges() {
 	for(int i = 0; i < this->SIZE; i++) {
 		std::sort(adj[i].begin(), adj[i].end(),
 		// sort by second value
-		 [](const std::pair<int,int> &a, const std::pair<int,int> &b) {
+		 [](auto &a, auto &b) {
 		 	return a.second < b.second;
 		 });
 	}
