@@ -3,6 +3,7 @@
 #include <utility>
 #include <map>
 #include <list>
+#include <algorithm>
 
 // Undirected Graph implemented using an adjacency list
 class Graph
@@ -13,7 +14,12 @@ public:
 	void addEdge(int p1, int p2, int weight);
 	std::vector<int> BFS(int start);
 	void print();
+	bool __sortbysec(const std::pair<int,int> &a,
+          		const std::pair<int,int> &b);	
 private:
+
+	void __sortAdjEdges();
+
 	std::vector< std::pair<int, int> > *adj;
 	int SIZE;
 };
@@ -26,6 +32,18 @@ Graph::Graph(int SIZE) {
 void Graph::addEdge(int p1, int p2, int weight) {
 	adj[p1].push_back(std::make_pair(p2, weight));
 	adj[p2].push_back(std::make_pair(p1, weight));
+	__sortAdjEdges();
+}
+
+// Sort adjacent edges by weight
+void Graph::__sortAdjEdges() {
+	for(int i = 0; i < this->SIZE; i++) {
+		std::sort(adj[i].begin(), adj[i].end(),
+		// sort by second value
+		 [](const std::pair<int,int> &a, const std::pair<int,int> &b) {
+		 	return a.second < b.second;
+		 });
+	}
 }
 
 std::vector<int> Graph::BFS(int start) {
@@ -34,16 +52,15 @@ std::vector<int> Graph::BFS(int start) {
 
 	// array for visted vertices
 	bool *visted = new bool[this->SIZE];
-	// set all vertices to not visted
+	// set all vertices to not-visted
 	for(int i = 0; i < this->SIZE; i++) {
 		visted[i] = false;
 	}
 
 	// create queue
-	// using list because vector has no pop_front()
 	std::list<int> queue;
 
-	// starting node is visted, and enqueue to queue
+	// starting node is visted and enqueued
 	visted[start] = true;
 	queue.push_back(start);
 
@@ -53,7 +70,6 @@ std::vector<int> Graph::BFS(int start) {
 		// print when dequeing 
 		start = queue.front();
 		bfs_order.push_back(start);
-		// std::cout << start << " ";
 		queue.pop_front();
 
 		// visit all adjacent nodes of vertex start.
@@ -145,7 +161,7 @@ int main() {
 	graph.addEdge(cities["Atlanta"],cities["New York"], 888);
 	graph.addEdge(cities["Boston"],cities["New York"], 214);
 
-	std::vector<int> bfs_order = graph.BFS(0);
+	std::vector<int> bfs_order = graph.BFS(cities["Los Angeles"]);
 
 	for(auto i : bfs_order) {
 		std::cout << cityVec[i] << std::endl;
