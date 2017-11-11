@@ -11,13 +11,30 @@ class Graph
 public:
 	Graph(int SIZE);
 
+	// add undirected edge 
 	void addEdge(int p1, int p2, int weight);
+
+	// returns Breadth First order
 	std::vector<int> BFS(int start);
+
+	// returns Depth First order
+	std::vector<int> DFS(int start);
+
+	// Output all vertices and edges
 	void print();
 private:
+	// Depth First recursive helper function
+	void _recurDFS(int start, bool *visited, std::vector<int> &order);
+
+	// sorts adjacent edges
 	void __sortAdjEdges();
 	
+	// array of vectors, each vector stores 
+	// adjacent edges (pairs) for a vertex.
+	// * pair.first = vertex #
+	// * pair.second = edge weight
 	std::vector< std::pair<int, int> > *adj;
+	// number of vertices
 	int SIZE;
 };
 
@@ -27,8 +44,10 @@ Graph::Graph(int SIZE) {
 }
 
 void Graph::addEdge(int p1, int p2, int weight) {
+	// create adj edge for both vertices
 	adj[p1].push_back(std::make_pair(p2, weight));
 	adj[p2].push_back(std::make_pair(p1, weight));
+	// sort the edges
 	__sortAdjEdges();
 }
 
@@ -80,6 +99,36 @@ std::vector<int> Graph::BFS(int start) {
 		}
 	}
 	return bfs_order;
+}
+
+std::vector<int> Graph::DFS(int start) {
+	// return vec
+	std::vector<int> dfs_order;
+
+	// array for visted vertices
+	bool *visited = new bool[this->SIZE];
+	// set all vertices to not-visted
+	for(int i = 0; i < this->SIZE; i++) {
+		visited[i] = false;
+	}
+
+	this->_recurDFS(start, visited, dfs_order);
+
+	return dfs_order;
+}
+
+void Graph::_recurDFS(int start, bool *visited, std::vector<int> &order) {
+	// Mark the current node as visited and
+    // print it
+    visited[start] = true;
+    order.push_back(start);
+ 
+    // Recur for all the vertices adjacent
+    // to this vertex
+    std::vector< std::pair<int, int> >::iterator i;
+    for (i = this->adj[start].begin(); i != this->adj[start].end(); ++i)
+        if (!visited[i->first])
+            this->_recurDFS(i->first, visited, order);
 }
 
 void Graph::print() {
@@ -158,9 +207,15 @@ int main() {
 	graph.addEdge(cities["Atlanta"],cities["New York"], 888);
 	graph.addEdge(cities["Boston"],cities["New York"], 214);
 
+	// BREADTH FIRST
 	std::vector<int> bfs_order = graph.BFS(cities["Los Angeles"]);
-
 	for(auto i : bfs_order) {
+		std::cout << cityVec[i] << std::endl;
+	}
+
+	// DEPTH FIRST
+	std::vector<int> dfs_order = graph.DFS(cities["Los Angeles"]);
+	for(auto i : dfs_order) {
 		std::cout << cityVec[i] << std::endl;
 	}
 
