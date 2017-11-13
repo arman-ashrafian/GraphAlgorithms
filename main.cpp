@@ -93,6 +93,7 @@ std::vector<int> Graph::BFS(int start) {
 		for(i = this->adj[start].begin(); i != this->adj[start].end(); ++i) {
 			if(!visted[i->first])
 			{
+				// std::cout << "Discovery Edge: " << i->first << std::endl;
 				visted[i->first] = true;
 				queue.push_back(i->first);
 			}
@@ -207,11 +208,17 @@ int main() {
 	graph.addEdge(cities["Atlanta"],cities["New York"], 888);
 	graph.addEdge(cities["Boston"],cities["New York"], 214);
 
+	std::cout << "BREADTH FIRST SEARCH" << std::endl
+			  << "====================" << std::endl;
+
 	// BREADTH FIRST
 	std::vector<int> bfs_order = graph.BFS(cities["Los Angeles"]);
 	for(auto i : bfs_order) {
 		std::cout << cityVec[i] << std::endl;
 	}
+
+	std::cout << "DEPTH FIRST SEARCH" << std::endl
+			  << "====================" << std::endl;
 
 	// DEPTH FIRST
 	std::vector<int> dfs_order = graph.DFS(cities["Los Angeles"]);
