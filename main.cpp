@@ -22,9 +22,11 @@ public:
 
 	// Output all vertices and edges
 	void print();
+
+	int getDiscoveryDistance() const;
 private:
 	// Depth First recursive helper function
-	void _recurDFS(int start, bool *visited, std::vector<int> &order);
+	void _recurDFS(int start, bool *visited, std::vector<int> &order, int dist);
 
 	// sorts adjacent edges
 	void __sortAdjEdges();
@@ -36,11 +38,18 @@ private:
 	std::vector< std::pair<int, int> > *adj;
 	// number of vertices
 	int SIZE;
+
+	// total distance traveled on discovery edges
+	int totalDistance = 0;
 };
 
 Graph::Graph(int SIZE) {
 	this->SIZE = SIZE;
 	adj = new std::vector< std::pair<int, int> >[SIZE];
+}
+
+int Graph::getDiscoveryDistance() const {
+	return this->totalDistance;
 }
 
 void Graph::addEdge(int p1, int p2, int weight) {
@@ -63,6 +72,8 @@ void Graph::__sortAdjEdges() {
 }
 
 std::vector<int> Graph::BFS(int start) {
+	this->totalDistance = 0;
+
 	// return vector
 	std::vector<int> bfs_order;
 
@@ -93,7 +104,7 @@ std::vector<int> Graph::BFS(int start) {
 		for(i = this->adj[start].begin(); i != this->adj[start].end(); ++i) {
 			if(!visted[i->first])
 			{
-				// std::cout << "Discovery Edge: " << i->first << std::endl;
+				this->totalDistance += i->second;
 				visted[i->first] = true;
 				queue.push_back(i->first);
 			}
@@ -103,6 +114,7 @@ std::vector<int> Graph::BFS(int start) {
 }
 
 std::vector<int> Graph::DFS(int start) {
+	this->totalDistance = 0;
 	// return vec
 	std::vector<int> dfs_order;
 
@@ -113,23 +125,24 @@ std::vector<int> Graph::DFS(int start) {
 		visited[i] = false;
 	}
 
-	this->_recurDFS(start, visited, dfs_order);
+	this->_recurDFS(start, visited, dfs_order, 0);
 
 	return dfs_order;
 }
 
-void Graph::_recurDFS(int start, bool *visited, std::vector<int> &order) {
+void Graph::_recurDFS(int start, bool *visited, std::vector<int> &order, int dist) {
 	// Mark the current node as visited and
     // print it
     visited[start] = true;
     order.push_back(start);
+    this->totalDistance += dist;
  
     // Recur for all the vertices adjacent
     // to this vertex
     std::vector< std::pair<int, int> >::iterator i;
     for (i = this->adj[start].begin(); i != this->adj[start].end(); ++i)
         if (!visited[i->first])
-            this->_recurDFS(i->first, visited, order);
+            this->_recurDFS(i->first, visited, order, i->second);
 }
 
 void Graph::print() {
@@ -216,6 +229,7 @@ int main() {
 	for(auto i : bfs_order) {
 		std::cout << cityVec[i] << std::endl;
 	}
+	std::cout << "Distance = " << graph.getDiscoveryDistance() << std::endl;
 
 	std::cout << "DEPTH FIRST SEARCH" << std::endl
 			  << "====================" << std::endl;
@@ -225,6 +239,8 @@ int main() {
 	for(auto i : dfs_order) {
 		std::cout << cityVec[i] << std::endl;
 	}
+
+	std::cout << "Distance = " << graph.getDiscoveryDistance() << std::endl;
 
 	return 0;
 }
