@@ -1,3 +1,6 @@
+// Arman Ashrafian
+// Shahin Fotowat
+
 #include <iostream>
 #include <vector>
 #include <utility>
@@ -24,6 +27,9 @@ public:
 	void print();
 
 	int getDiscoveryDistance() const;
+
+	std::vector< std::pair<int, int> > discoveryEdges;
+	std::vector< std::pair<int, int> > backEdges;
 private:
 	// Depth First recursive helper function
 	void _recurDFS(int start, bool *visited, std::vector<int> &order, int dist);
@@ -73,6 +79,8 @@ void Graph::__sortAdjEdges() {
 
 std::vector<int> Graph::BFS(int start) {
 	this->totalDistance = 0;
+	this->discoveryEdges.clear();
+	this->backEdges.clear();
 
 	// return vector
 	std::vector<int> bfs_order;
@@ -104,9 +112,15 @@ std::vector<int> Graph::BFS(int start) {
 		for(i = this->adj[start].begin(); i != this->adj[start].end(); ++i) {
 			if(!visted[i->first])
 			{
+				// update distance
 				this->totalDistance += i->second;
+				// add discovery edge
+				this->discoveryEdges.push_back(std::make_pair(start, i->first));
+
 				visted[i->first] = true;
 				queue.push_back(i->first);
+			} else {
+				this->backEdges.push_back(std::make_pair(start, i->first));
 			}
 		}
 	}
@@ -224,23 +238,39 @@ int main() {
 	std::cout << "BREADTH FIRST SEARCH" << std::endl
 			  << "====================" << std::endl;
 
-	// BREADTH FIRST
-	std::vector<int> bfs_order = graph.BFS(cities["Los Angeles"]);
+	/************************* BREADTH FIRST *************************************/
+	std::vector<int> bfs_order = graph.BFS(cities["Dallas"]);
 	for(auto i : bfs_order) {
 		std::cout << cityVec[i] << std::endl;
 	}
-	std::cout << "Distance = " << graph.getDiscoveryDistance() << std::endl;
+	std::cout << "\nDistance = " << graph.getDiscoveryDistance() << std::endl << std::endl
+			  << "Discvery Edges\n" << "==============" << std::endl;
 
-	std::cout << "DEPTH FIRST SEARCH" << std::endl
-			  << "====================" << std::endl;
+	for(auto i : graph.discoveryEdges) {
+		std::cout << cityVec[i.first] << " to " << cityVec[i.second] << std::endl;
+	}
 
-	// DEPTH FIRST
-	std::vector<int> dfs_order = graph.DFS(cities["Los Angeles"]);
+	std::cout << "Back Edges\n" << "============\n";
+
+	for(auto i : graph.backEdges) {
+		std::cout << cityVec[i.first] << " to " << cityVec[i.second] << std::endl;
+	}	
+
+
+	//////////////////////////////////////////////////////////////////////////////
+
+	/****************************** DEPTH FIRST ******************************************/
+	std::cout << "\nDEPTH FIRST SEARCH" << std::endl
+		  	  << "====================" << std::endl;
+
+	std::vector<int> dfs_order = graph.DFS(cities["Dallas"]);
 	for(auto i : dfs_order) {
 		std::cout << cityVec[i] << std::endl;
 	}
 
-	std::cout << "Distance = " << graph.getDiscoveryDistance() << std::endl;
+	std::cout << "\nDistance = " << graph.getDiscoveryDistance() << std::endl << std::endl;
+
+	///////////////////////////////////////////////////////////////////////////////////////
 
 	return 0;
 }

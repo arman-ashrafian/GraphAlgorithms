@@ -1,0 +1,18 @@
+Part A:
+
+Discovery Edges
+================
+Houston to Dallas
+Houston to Atlanta
+Houston to Miami
+Dallas to Kansas City
+Dallas to Los Angeles
+Atlanta to New York
+Kansas City to Chicago 
+Kansas City to Denver
+Los Angeles to San Francisco 
+New York to Boston
+Chicago to Seattle
+
+
+
