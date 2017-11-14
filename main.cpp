@@ -129,6 +129,7 @@ std::vector<int> Graph::BFS(int start) {
 
 std::vector<int> Graph::DFS(int start) {
 	this->totalDistance = 0;
+
 	// return vec
 	std::vector<int> dfs_order;
 
@@ -146,7 +147,7 @@ std::vector<int> Graph::DFS(int start) {
 
 void Graph::_recurDFS(int start, bool *visited, std::vector<int> &order, int dist) {
 	// Mark the current node as visited and
-    // print it
+	// print it
     visited[start] = true;
     order.push_back(start);
     this->totalDistance += dist;
@@ -235,29 +236,26 @@ int main() {
 	graph.addEdge(cities["Atlanta"],cities["New York"], 888);
 	graph.addEdge(cities["Boston"],cities["New York"], 214);
 
+	/***************************** BREADTH FIRST *************************************/
 	std::cout << "BREADTH FIRST SEARCH" << std::endl
-			  << "====================" << std::endl;
+		  	  << "====================" << std::endl;
 
-	/************************* BREADTH FIRST *************************************/
 	std::vector<int> bfs_order = graph.BFS(cities["Dallas"]);
 	for(auto i : bfs_order) {
 		std::cout << cityVec[i] << std::endl;
 	}
-	std::cout << "\nDistance = " << graph.getDiscoveryDistance() << std::endl << std::endl
-			  << "Discvery Edges\n" << "==============" << std::endl;
+	std::cout << "\nDistance = " << graph.getDiscoveryDistance() << std::endl << std::endl;
+	// 		  << "Discvery Edges\n" << "==============" << std::endl;
 
-	for(auto i : graph.discoveryEdges) {
-		std::cout << cityVec[i.first] << " to " << cityVec[i.second] << std::endl;
-	}
+	// for(auto i : graph.discoveryEdges) {
+	// 	std::cout << cityVec[i.first] << " to " << cityVec[i.second] << std::endl;
+	// }
 
-	std::cout << "Back Edges\n" << "============\n";
+	// std::cout << "Back Edges\n" << "============\n";
 
-	for(auto i : graph.backEdges) {
-		std::cout << cityVec[i.first] << " to " << cityVec[i.second] << std::endl;
-	}	
-
-
-	//////////////////////////////////////////////////////////////////////////////
+	// for(auto i : graph.backEdges) {
+	// 	std::cout << cityVec[i.first] << " to " << cityVec[i.second] << std::endl;
+	// }	
 
 	/****************************** DEPTH FIRST ******************************************/
 	std::cout << "\nDEPTH FIRST SEARCH" << std::endl
@@ -269,8 +267,6 @@ int main() {
 	}
 
 	std::cout << "\nDistance = " << graph.getDiscoveryDistance() << std::endl << std::endl;
-
-	///////////////////////////////////////////////////////////////////////////////////////
 
 	return 0;
 }
