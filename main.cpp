@@ -244,18 +244,18 @@ int main() {
 	for(auto i : bfs_order) {
 		std::cout << cityVec[i] << std::endl;
 	}
-	std::cout << "\nDistance = " << graph.getDiscoveryDistance() << std::endl << std::endl;
-	// 		  << "Discvery Edges\n" << "==============" << std::endl;
+	std::cout << "\nDistance = " << graph.getDiscoveryDistance() << std::endl << std::endl
+			  << "Discvery Edges\n" << "==============" << std::endl;
 
-	// for(auto i : graph.discoveryEdges) {
-	// 	std::cout << cityVec[i.first] << " to " << cityVec[i.second] << std::endl;
-	// }
+	for(auto i : graph.discoveryEdges) {
+		std::cout << cityVec[i.first] << " to " << cityVec[i.second] << std::endl;
+	}
 
-	// std::cout << "Back Edges\n" << "============\n";
+	std::cout << "Back Edges\n" << "============\n";
 
-	// for(auto i : graph.backEdges) {
-	// 	std::cout << cityVec[i.first] << " to " << cityVec[i.second] << std::endl;
-	// }	
+	for(auto i : graph.backEdges) {
+		std::cout << cityVec[i.first] << " to " << cityVec[i.second] << std::endl;
+	}	
 
 	/****************************** DEPTH FIRST ******************************************/
 	std::cout << "\nDEPTH FIRST SEARCH" << std::endl

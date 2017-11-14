@@ -1,0 +1,101 @@
+Arman Ashrafian
+Shahin Fotowat 
+Assignment #10
+CS 1D
+
+* BFS & DFS starting from Dallas.
+
+
+BREADTH FIRST SEARCH
+====================
+Dallas
+Houston
+Kansas City
+Atlanta
+Los Angeles
+Miami
+Chicago
+Denver
+New York
+San Francisico
+Boston
+Seattle
+
+Distance = 9991
+
+Discvery Edges
+==============
+Dallas to Houston
+Dallas to Kansas City
+Dallas to Atlanta
+Dallas to Los Angeles
+Houston to Miami
+Kansas City to Chicago
+Kansas City to Denver
+Kansas City to New York
+Los Angeles to San Francisico
+Chicago to Boston
+Chicago to Seattle
+
+Cross Edges
+===============
+Houston to Atlanta
+Atlanta to Miami
+Kansas City to Atlanta
+Atlanta to New York
+New York to Boston
+New York to Chicago
+Los Angeles to Kansas City
+Los Angeles to Denver
+San Francisco to Denver
+San Francisco to Seattle
+Denver to Chicago
+
+
+DEPTH FIRST SEARCH
+====================
+Dallas
+Houston
+Atlanta
+Miami
+Kansas City
+Chicago
+New York
+Boston
+Denver
+Los Angeles
+San Francisico
+Seattle
+
+Discovery Edges
+==================
+Dallas to Houston
+Houston to Atlanta
+Atlanta to Miami
+Atlanta to Kansas City
+Kansas City to Chicago
+Chicago to New York
+New York to Boston 
+Boston to Denver
+Denver to Los Angeles
+Los Angleles to San Francisco 
+San Francisco to Seattle
+
+Back Edges
+===========
+Dallas to Atlanta
+Dallas to Kansas City
+Dallas to Los Angeles
+Los Angeles to Kansas City
+Kansas City to Denver
+Denver to San Francsico
+Denver to Seattle
+Seattle to Chicago
+Houston to Miami
+Atlanta to New York
+Boston to Chicago
+
+Distance = 7314
+
+
+
