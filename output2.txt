@@ -1,0 +1,97 @@
+Arman Ashrafian
+
+BREADTH FIRST SEARCH
+====================
+Dallas
+Kansas City
+Atlanta
+Los Angeles
+Chicago
+Denver
+New York
+Miami
+Boston
+Seattle
+San Francisico
+Houston
+
+Distance = 11299
+
+Discvery Edges
+==============
+Dallas to Kansas City
+Dallas to Atlanta
+Dallas to Los Angeles
+Kansas City to Chicago
+Kansas City to Denver
+Kansas City to New York
+Atlanta to Miami
+Chicago to Boston
+Chicago to Seattle
+Denver to San Francisico
+Miami to Houston
+
+Back Edges
+============
+Kansas City to Atlanta
+Kansas City to Los Angeles
+Los Angeles to Denver
+Denver to Chicago
+New York to Chicago
+New York to Atlanta
+Boston to New York
+Seattle to San Francisico
+Seattle to Denver
+San Francisico to Los Angeles
+Houston to Dallas
+Houston to Atlanta
+
+DEPTH FIRST SEARCH
+====================
+Dallas
+Kansas City
+Chicago
+Boston
+New York
+Atlanta
+Miami
+Houston
+Seattle
+San Francisico
+Los Angeles
+Denver
+
+Discvery Edges
+==============
+Dallas to Kansas City
+Kansas City to Chicago
+Chicago to Boston
+Boston to New York
+New York to Atlanta
+Atlnata to Miami
+Miami to Houston
+Chicago to Seattle
+Seattle to San Francisco 
+San Francisco to Los Angeles 
+Los Angeles to Denver
+
+Cross Edges
+============
+Dallas to Atlanta
+Dallas to Los Angeles
+Kansas City to Atlanta
+Kansas City to New York
+Kansas City to Denver
+Kansas City to Los Angeles
+New York to Chicago
+Houston to Dallas
+Houston to Atlanta
+Seattle to Denver
+Denver to San Francisco
+Denver to Chicago
+
+Distance = 9262
+
+Strongly Connected? yes
+
+Graph is strongly connected because every vertex can be reached from any vertex. This is tested by reversing the direction of all edges and performing DFS traversals.
